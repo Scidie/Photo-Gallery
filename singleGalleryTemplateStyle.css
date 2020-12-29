@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#main-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: bisque;
+}
+
+.new-window {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+#add-button {
+    padding: 20px;
+    align-self: flex-start;
+    justify-self: flex-start;
+}
+
+.photo {
+    width: 100px;
+}
+
+#photos-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
