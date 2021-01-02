@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./indexStyle.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./galleries.css">
+    <link rel="stylesheet" href="./editPhotosWindowStyle.css">
 </head>
 <body>
     <div id="global-container">
@@ -17,12 +19,13 @@
             <a class="navbar-element" href="./galleries.html">GALLERIES</a>
             <a class="navbar-element" href="./controlPanel.html">CONTROL</a>
         </div>
+        <div id="gallery-name-label">Create new gallery</div>
         <div id="container">
-            <input type="text" id="gallery-name-input">
+            <input type="text" id="gallery-name-input" value="">
             <button id="add-gallery-button">+</button>
         </div>
+        <div id="galleries-container"></div>
     </div>
-   
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="./controlPanel.js"></script>
 </body>
 </html>

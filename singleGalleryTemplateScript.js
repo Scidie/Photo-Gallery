@@ -1,10 +1,7 @@
 let addFilesButton = document.querySelector("#add-button");
 let mainContainer = document.querySelector("#main-container");
 let photosContainer = document.querySelector("#photos-container");
-let isWindowClosed = true;
-let galleryID = "";
-let photosArray = "";
-let url = "data.json";
+
 
 fetch(url)
 .then(response => response.json())
@@ -51,7 +48,7 @@ function appendUploadSection() {
     });
 }
 
-function uploadFile(inputFile) {
+function uploadFile(inputFile, galleryID) {
     let src = `${galleryID}/`;
     let fd = new FormData();
     fd.append("file", inputFile.files[0]);
@@ -69,36 +66,7 @@ function uploadFile(inputFile) {
     })
 }
 
-function createGalleryPage(photosArray) {
-    let markup = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="galleryTemplate.css">
-    </head>
-    <body>
-    <div id="gallery-container">`;
-    photosArray.forEach(photo => {
-        markup += `<img src="./${galleryID}/${photo}" class="gallery-element"></img>`
-    })
 
-    markup += `</div>
-    </body>
-    </html>`
-
-    let fd = new FormData();
-    fd.append("HTMLContent", markup);
-    fd.append("galleryID", galleryID);
-    fetch("uploadHTML.php", {
-        method: "POST",
-        body: fd,
-    })
-    .then(() => {
-        location.reload();
-    })
-}
 
 function addElementsToList(photosArray, galleryID, container) {
     photosArray.forEach(name => {

@@ -11,13 +11,11 @@ fetch("data.json")
 function createListOfGalleries(json) {
     const keys = Object.keys(json);
     for (let i = 0; i < keys.length; i++) {
-        if (i !== 0) {
-            let gallery = document.createElement("div");
-            gallery.classList.add("gallery");
-            gallery.textContent = `${keys[i]}`;
-            gallery.id = `${keys[i]}`;
-            galleriesContainer.appendChild(gallery)
-        }  
+        let gallery = document.createElement("div");
+        gallery.classList.add("gallery");
+        gallery.textContent = `${keys[i]}`;
+        gallery.id = `${keys[i]}`;
+        galleriesContainer.appendChild(gallery)
     }
 }
 
@@ -33,7 +31,7 @@ function addEventListnersToAllGalleries(json) {
                 fetch("data.json")
                 .then(response => response.json())
                 .then(() => {
-                    document.location.href = "./singleGalleryTemplate.html"
+                    document.location.href = `./${gallery.id}.html`
                 })
             })
         })

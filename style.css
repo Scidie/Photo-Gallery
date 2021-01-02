@@ -1,18 +1,27 @@
 #add-gallery-button {
     font-size: 40px;
-    width: 72px;
-    height: 72px;
+    width: 52px;
+    height: 52px;
+    font-weight: 900;
+    font-size: 40px;
 }
 
 #gallery-name-input {
     width: 420px;
-    height: 72px;
-    font-size: 40px;
+    height: 52px;
+    font-size: 30px;
+    color:rgb(56, 56, 56)
 }
 
 #container {
+    padding: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+#gallery-name-label {
+    padding: 50px 0 10px 0;
+    align-self: center;
 }

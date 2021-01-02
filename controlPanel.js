@@ -1,3 +1,16 @@
+import * as handlers from "./controlPanelFunctions.js"
+
+let galleriesContainer = document.querySelector("#galleries-container");
+
+fetch("data.json")
+.then(response => response.json())
+.then(json => {
+  handlers.createListOfGalleries(json, galleriesContainer);
+  handlers.appendEditPhotosWindowEventToElements(json);
+})
+
+
+
 const galleryNameInput = document.querySelector("#gallery-name-input");
 const addNewGalleryButton = document.querySelector("#add-gallery-button");
 
@@ -18,8 +31,13 @@ function addNewGallery() {
     method: "POST",
     body: fd,
   })
+  .then(() => {
+    location.reload();
+  })
   
   galleryNameInput.value = "";
 }
+
+
 
 
