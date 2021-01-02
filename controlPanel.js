@@ -9,8 +9,6 @@ fetch("data.json")
   handlers.appendEditPhotosWindowEventToElements(json);
 })
 
-
-
 const galleryNameInput = document.querySelector("#gallery-name-input");
 const addNewGalleryButton = document.querySelector("#add-gallery-button");
 
