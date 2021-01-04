@@ -1,27 +1,25 @@
 export function createListOfGalleries(json, galleriesContainer) {
     const keys = Object.keys(json);
     for (let i = 0; i < keys.length; i++) {
-        if (i !== 0) {
-            let gallery = document.createElement("div");
-            gallery.classList.add("gallery");
-            gallery.textContent = `${keys[i]}`;
-            gallery.id = `${keys[i]}`;
-            galleriesContainer.appendChild(gallery)
-        }  
+        let gallery = document.createElement("div");
+        gallery.classList.add("gallery");
+        gallery.textContent = `${keys[i]}`;
+        gallery.id = `${keys[i]}`;
+        galleriesContainer.appendChild(gallery)
     }
 }
 
-export function appendEditPhotosWindowEventToElements(json) {
+export function appendEventListenersToGalleries(json) {
     let galleries = document.querySelectorAll(".gallery")
     galleries.forEach(gallery => {
         gallery.addEventListener("click", () => {
-            createEditPhotosWindowElement(gallery.id, json)
+            createGalleryWindow(gallery.id, json)
         })
     })
 }
 
-export function createEditPhotosWindowElement(galleryID, json) {
-    console.log(galleryID)
+export function createGalleryWindow(galleryID, json) {
+    let photosWindowContainer = document.querySelector("#photos-window-container");
     let window = document.createElement("div");
     window.classList.add("edit-photos-window");
 
@@ -36,17 +34,14 @@ export function createEditPhotosWindowElement(galleryID, json) {
     uploadPhotoButton.textContent = "upload";
     uploadPhotoButton.addEventListener("click", () => {
         let inputFile = document.querySelector("#input-file")
-        uploadFile(inputFile, galleryID);
+        uploadFile(inputFile, galleryID, photosWindowContainer);
     });
 
     let closeWindowButton = document.createElement("button")
     closeWindowButton.classList.add("close-window-button");
     closeWindowButton.textContent = "close window";
-    closeWindowButton.textContent = "close window";
     closeWindowButton.addEventListener("click", () => {
-        let parent = document.querySelector("#global-container")
-        let child = document.querySelector(".edit-photos-window")
-        parent.removeChild(child)
+        closeGallery(photosWindowContainer);
     })
 
     let photosSection = document.createElement("div");
@@ -60,23 +55,43 @@ export function createEditPhotosWindowElement(galleryID, json) {
     window.appendChild(topSection)
     window.appendChild(photosSection)
 
-    document.querySelector("#global-container").appendChild(window);
+    photosWindowContainer.appendChild(window);
+    photosWindowContainer.style.display ="flex"
 
-    appendElementsToEditPhotosWindow(json, galleryID, photosSection);
+    appendPhotosToGallery(json, galleryID, photosSection);
 }
 
-export function appendElementsToEditPhotosWindow(json, galleryID, photosContainer) {
+export function closeGallery(photosWindowContainer) {
+    photosWindowContainer.innerHTML = "";
+    photosWindowContainer.style.display = "none";
+}
+
+export function appendPhotosToGallery(json, galleryID, photosContainer) {
     let photos = json[galleryID]["photos"];
-    console.log("I got here!")
     photos.forEach(photo => {
         let photoElement = document.createElement("img")
         photoElement.id = photo;
+        photoElement.classList.add("photo-style")
         photoElement.src = `./${galleryID}/${photo}`
         photosContainer.appendChild(photoElement);
     })
 }
 
-export function uploadFile(inputFile, galleryID) {
+export function appendPhotoListToGallery(json, galleryID, photosContainer) {
+    let photos = json[galleryID]["photos"];
+    photos.forEach(photo => {
+        let listElementContainer = document.createElement("div")
+        listElementContainer.classList.add("list-element-container")
+        let deletePhotoButton = document.createElement("button")
+        let photoElement = document.createElement("img")
+        photoElement.id = photo;
+        photoElement.classList.add("photo-style")
+        photoElement.src = `./${galleryID}/${photo}`
+        photosContainer.appendChild(photoElement);
+    })
+}
+
+export function uploadFile(inputFile, galleryID, photosWindowContainer) {
     console.log("this: " + galleryID)
     let src = `${galleryID}`;
     let fd = new FormData();
@@ -88,13 +103,8 @@ export function uploadFile(inputFile, galleryID) {
         body: fd,
     })
     .then(() => {
-        fetch("data.json")
-        .then(response => response.json())
-        .then(json => {
-            let photosArray = json[galleryID]["photos"];
-            console.log(photosArray);
-            createGalleryPage(photosArray, galleryID)
-        })
+        photosWindowContainer.innerHTML = "";
+        location.reload();
     })
 }
 

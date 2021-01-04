@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./indexStyle.css">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./galleries.css">
-    <link rel="stylesheet" href="./editPhotosWindowStyle.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">  
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="photos-window-container" style="display: none;"></div>
+    <div id="title-container">
+        <div id="title">Control Panel</div>
+    </div>
     <div id="global-container">
-        <div id="title-container">
-            <div id="title">Control Panel</div>
-        </div>
         <div id="navbar-container">
             <a class="navbar-element" href="./index.html">HOME</a>
             <a class="navbar-element" href="./galleries.html">GALLERIES</a>
@@ -22,7 +28,7 @@
         <div id="gallery-name-label">Create new gallery</div>
         <div id="container">
             <input type="text" id="gallery-name-input" value="">
-            <button id="add-gallery-button">+</button>
+            <button id="add-gallery-button"></button>
         </div>
         <div id="galleries-container"></div>
     </div>

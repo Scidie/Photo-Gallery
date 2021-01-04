@@ -6,7 +6,7 @@ fetch("data.json")
 .then(response => response.json())
 .then(json => {
   handlers.createListOfGalleries(json, galleriesContainer);
-  handlers.appendEditPhotosWindowEventToElements(json);
+  handlers.appendEventListenersToGalleries(json);
 })
 
 const galleryNameInput = document.querySelector("#gallery-name-input");
