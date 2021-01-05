@@ -1,12 +1,12 @@
 <?php
     $galleryID = $_POST["galleryID"];
-    $initGalleryValue = $_POST["initGalleryValue"];
+    $initGalleryValue = $_POST["json"];
     $initGalleryValueDecoded = json_decode($initGalleryValue, true);
 
     $jsonData = file_get_contents('data.json');
     $jsonDataDecoded = json_decode($jsonData, true);
 
-    $jsonDataDecoded["{$galleryID}"] = $initGalleryValueDecoded;
+    $jsonDataDecoded = $initGalleryValueDecoded;
 
     mkdir("{$galleryID}");
 
