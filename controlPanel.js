@@ -1,12 +1,12 @@
 import * as handlers from "./controlPanelFunctions.js"
 
 let galleriesContainer = document.querySelector("#galleries-container");
-let jsonData = "";
+let json = "";
 
 fetch("data.json")
 .then(response => response.json())
-.then(json => {
-  jsonData = json;
+.then(response => {
+  json = response;
   handlers.createListOfGalleries(json, galleriesContainer);
   handlers.appendEventListenersToGalleries(json);
 })
@@ -15,7 +15,7 @@ const galleryNameInput = document.querySelector("#gallery-name-input");
 const addNewGalleryButton = document.querySelector("#add-gallery-button");
 
 addNewGalleryButton.addEventListener("click", () => {
-  addNewGallery(jsonData);
+  addNewGallery(json);
 });
 
 function addNewGallery(json) {
