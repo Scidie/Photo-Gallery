@@ -1,5 +1,5 @@
 export async function updateJSON(path) {
-   const response = await fetch(path);
+    const response = await fetch(path);
     const json = await response.json();
     return json;
 }

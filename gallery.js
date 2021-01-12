@@ -1,10 +1,10 @@
 import * as handlers from "./functions.js"
 import * as templates from "./templates.js"
 
-let galleriesContainer = document.querySelector("#galleries-container");
-let photosWindowContainer = document.querySelector("#photos-window-container");
 export let json = "";
-let path = "data.json";
+let galleriesContainer = document.querySelector("#galleries-container");
+    photosWindowContainer = document.querySelector("#photos-window-container");
+    path = "data.json";
 
 handlers.updateJSON(path)
 .then(response => {

@@ -1,8 +1,8 @@
 import * as handlers from "./functions.js"
-import {json} from "./gallery.js"
+import { json } from "./gallery.js"
 
 let galleryNameInput = document.querySelector("#gallery-name-input");
-let addNewGalleryButton = document.querySelector("#add-gallery-button");
+    addNewGalleryButton = document.querySelector("#add-gallery-button");
 
 addNewGalleryButton.addEventListener("click", () => {
   handlers.addNewPropertyToObjectFromInput(`${galleryNameInput.value}`, json, {"photos": []})
