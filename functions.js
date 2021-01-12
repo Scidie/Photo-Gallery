@@ -40,10 +40,6 @@ export function createImgElement(directory, fileName, className) {
     return imageElement;
 }
 
-export function appendEventsToElements(elements, action) {
-    
-}
-
 export function appendTemplate(parent, template) {
     parent.style.display = "flex";
     parent.innerHTML += template;
