@@ -66,6 +66,7 @@ export function hideElement(element) {
     element.style.display = "none";
 }
 
+//todo: make it pure function.
 export function clearAndHideElement(element) {
     element.innerHTML = "";
     element.style.display = "none";

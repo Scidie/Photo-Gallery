@@ -11,6 +11,8 @@ handlers.updateJSON(path)
   json = response;
   let galleries = handlers.createGroupOfElements(Object.keys(json), "gallery", "div");
 
+
+  //add hidden gallery divs for every gallery.
   galleries.forEach(gallery => {
     let galleryDiv = document.createElement("div")
     galleryDiv.classList.add("hidden-gallery-window");
@@ -19,6 +21,8 @@ handlers.updateJSON(path)
     photosWindowContainer.appendChild(galleryDiv);
   })
 
+  //append event listener to every gallery which pops up hidden gallery and appends event listener to button responsible for uploading images and updating database, add images to poping out windows.
+  //todo: divide the process for more readibility.
   galleries.forEach(gallery => {
     gallery.addEventListener("click", () => {
       let hiddenGalleryWindow = photosWindowContainer.querySelector(`#${gallery.id}`);
