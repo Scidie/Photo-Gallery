@@ -10,12 +10,14 @@ export function appendElements(elements, parent) {
     })
 }
 
-export function createGroupOfElements(array, className, type, directory) {
+
+export function createGroupOfElements(object, className, type, directory) {
     let elements = [];
+    let array = Object.keys(object);
     array.forEach(element => {
         switch(type) {
             case "div":
-                elements.push(createDivElement(element, className));
+                elements.push(createDivElement(className, element));
                 break;
             case "img":
                 elements.push(createImgElement(directory, element, className));
@@ -25,12 +27,11 @@ export function createGroupOfElements(array, className, type, directory) {
     return elements;
 }
 
-export function createDivElement(id, className) {
-    let element = document.createElement("div");
-    element.id = id;
-    element.textContent = id;
-    element.classList.add(className)
-    return element;
+export function createDivElement(className, textContent) {
+    let div = document.createElement("div");
+    div.textContent = textContent;
+    div.classList.add(className)
+    return div;
 }
 
 export function createImgElement(directory, fileName, className) {
@@ -40,8 +41,8 @@ export function createImgElement(directory, fileName, className) {
     return imageElement;
 }
 
+
 export function appendTemplate(parent, template) {
-    parent.style.display = "flex";
     parent.innerHTML += template;
 }
 
@@ -66,10 +67,8 @@ export function hideElement(element) {
     element.style.display = "none";
 }
 
-//todo: make it pure function.
-export function clearAndHideElement(element) {
-    element.innerHTML = "";
-    element.style.display = "none";
+export function revealElement(element, cssDisplayValue) {
+    element.style.display = cssDisplayValue;
 }
 
 export function addNewPropertyToObjectFromInput(input, object, value) {
@@ -103,3 +102,21 @@ export function sendFileToPHP(inputFile, directoryName, PHPScript) {
         body: fd,
     })
 }
+
+
+
+    // export function generateID(array) {
+    //     if(array.length === 0) {
+    //         return 0;
+    //     } else {
+    //         if(Math.max(...array) > array.length - 1) {
+    //             for(let i = 0; i < array.length; i++) {
+    //                 if (array.includes(i) === false) {
+    //                     return i;
+    //                 }
+    //             }
+    //         } else {
+    //             return Math.max(...array) + 1;
+    //         }
+    //     }
+    // }

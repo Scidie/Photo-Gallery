@@ -15,24 +15,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="photos-window-container""></div>
+    <div id="preloaded-photos-container"></div>
     <div id="title-container">
-        <div id="title">Control Panel</div>
+        <div id="title">Photo Gallery
+            <div id="author">by Daria Błaszczak</div>
+        </div>
+        <div id="navbar-container">
+            <a class="navbar-element" href="./index.html">HOME
+                <div class="line"></div>
+            </a>
+            <a class="navbar-element" href="./galleries.html">GALLERIES
+                <div class="line"></div>
+            </a>
+            <a class="navbar-element" href="./controlPanel.html">CONTROL
+                <div class="line"></div>
+            </a>
+        </div>
     </div>
     <div id="global-container">
-        <div id="navbar-container">
-            <a class="navbar-element" href="./index.html">HOME</a>
-            <a class="navbar-element" href="./galleries.html">GALLERIES</a>
-            <a class="navbar-element" href="./controlPanel.html">CONTROL</a>
-        </div>
-        <div id="gallery-name-label">Create new gallery</div>
-        <div id="container">
+        <div id="input-container">
             <input type="text" id="gallery-name-input" value="">
             <button id="add-gallery-button"></button>
         </div>
-        <div id="galleries-container"></div>
+        <div id="edit-galleries-section">
+            <div id="galleries-list-panel" class="panel-style"></div>
+            <div id="edit-gallery-panel" class="panel-style">
+                <div id="hidden-add-photo-panel">
+                    <input type="file" id="hidden-input-file">
+                    <button id="upload-file-button">upload</button>
+                </div>
+                <div id="photos-container"></div>
+            </div>
+            <div id="tools-panel" class="panel-style">
+                <button class="tools-panel-button">edit</button>
+                <button class="tools-panel-button">move</button>
+                <button class="tools-panel-button">delete</button>
+                <button class="tools-panel-button" id="add-photo-button">add photo</button>
+            </div>
+        </div>
     </div>
     <script type="module" src="./gallery.js"></script>
-    <script type="module" src="./controlPanel.js"></script>
+    <!-- <script type="module" src="./controlPanel.js"></script> -->
 </body>
 </html>

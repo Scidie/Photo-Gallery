@@ -1,59 +1,69 @@
 import * as handlers from "./functions.js"
-import * as templates from "./templates.js"
 
-export let json = "";
-let galleriesContainer = document.querySelector("#galleries-container");
-    photosWindowContainer = document.querySelector("#photos-window-container");
-    path = "data.json";
+// defining global variables
+let json = "",
+    galleriesListPanel = document.querySelector("#galleries-list-panel"),
+    photosContainer = document.querySelector("#photos-container"),
+    path = "data.json",
+    selectedGallery = "",
+    addPhotoButton = document.querySelector("#add-photo-button"),
+    galleryNameInput = document.querySelector("#gallery-name-input"),
+    addNewGalleryButton = document.querySelector("#add-gallery-button");
 
+// getting json data from server
 handlers.updateJSON(path)
 .then(response => {
   json = response;
-  let galleries = handlers.createGroupOfElements(Object.keys(json), "gallery", "div");
+  let galleryListElements = handlers.createGroupOfElements(json, "gallery", "div");
+  let keys = Object.keys(json);
+  let images = {}
 
-
-  //add hidden gallery divs for every gallery.
-  galleries.forEach(gallery => {
-    let galleryDiv = document.createElement("div")
-    galleryDiv.classList.add("hidden-gallery-window");
-    galleryDiv.id = `${gallery.id}`;
-    galleryDiv.style.display = "none";
-    photosWindowContainer.appendChild(galleryDiv);
-  })
-
-  //append event listener to every gallery which pops up hidden gallery and appends event listener to button responsible for uploading images and updating database, add images to poping out windows.
-  //todo: divide the process for more readibility.
-  galleries.forEach(gallery => {
-    gallery.addEventListener("click", () => {
-      let hiddenGalleryWindow = photosWindowContainer.querySelector(`#${gallery.id}`);
-      if (hiddenGalleryWindow.innerHTML === "") {
-        handlers.appendTemplate(hiddenGalleryWindow, templates.templates["controlPanel"]["popUpWindow"]);
-        hiddenGalleryWindow.querySelector("#upload-button").addEventListener("click", () => {
-          let inputFile = hiddenGalleryWindow.querySelector("#input-file");
-          handlers.addNewValueToArray(json[gallery.id]["photos"], inputFile.files[0].name)
-          handlers.sendDataToPHP("json", json, "uploadJSON.php")
-          handlers.sendFileToPHP(inputFile.files[0], `${gallery.id}`, "uploadFile.php" )
-          .then(() => {
-            location.reload();
-          })
-        })
-
-        hiddenGalleryWindow.querySelector("#close-window-button").addEventListener("click", () => {
-          handlers.hideElement(photosWindowContainer);
-          handlers.hideElement(hiddenGalleryWindow);
-        })
-
-        let photos = handlers.createGroupOfElements(json[gallery.id]["photos"], "photo-style", "img", gallery.id)
-
-        handlers.appendElements(photos, hiddenGalleryWindow.querySelector(".photos-section"));
-        photosWindowContainer.style.display = "flex";
-        hiddenGalleryWindow.style.display = "flex";
-      } else {
-          photosWindowContainer.style.display = "flex";
-          hiddenGalleryWindow.style.display = "flex";
-      }
+// preloading all images.
+  keys.forEach(key => {
+    images[key] = {"photos": []};
+    json[key]["photos"].forEach(imageFileName => {
+      let image = new Image();
+      image.src = `./${key}/${imageFileName}`;
+      image.classList.add("photo-style")
+      images[key]["photos"].push(image);
     })
   })
-  
-  handlers.appendElements(galleries, galleriesContainer);
+
+// setting up json - add event listener to button which sends data(creates directory for photos and json properties) to server.
+  addNewGalleryButton.addEventListener("click", () => {
+    handlers.addNewPropertyToObjectFromInput(`${galleryNameInput.value}`, json, {"photos": []})
+    handlers.sendDataToPHP("directoryName", `${galleryNameInput.value}`, "addNewDirectory.php")
+    handlers.sendDataToPHP("json", json, "uploadJSON.php")
+    .then(() => {
+      location.reload();
+    })
+  });
+
+// adding event listneres to each gallery list element, clearing edit view, then adding clicked gallery photos.
+  galleryListElements.forEach(element => {
+    element.addEventListener("click", () => {
+      photosContainer.innerHTML = "";
+      selectedGallery = `${element.textContent}`;
+      
+      images[selectedGallery]["photos"].forEach(image => {
+        photosContainer.appendChild(image)
+      })
+    })
+  })
+
+// appending gallery list elements to galleries panel.
+  handlers.appendElements(galleryListElements, galleriesListPanel);
+
+  addPhotoButton.addEventListener("click", () => {
+    document.querySelector("#hidden-add-photo-panel").style.display = "flex";
+  })
+// uploading images to server, setting up json properties.
+  document.querySelector("#upload-file-button").addEventListener("click", () => {  
+    handlers.addNewValueToArray(json[selectedGallery]["photos"], document.querySelector("#hidden-input-file").files[0].name)
+    handlers.sendDataToPHP("json", json, "uploadJSON.php")
+    handlers.sendFileToPHP(document.querySelector("#hidden-input-file").files[0], selectedGallery, "uploadFile.php" )
+    .then(() => {
+      location.reload();
+    })
+  })
 })
