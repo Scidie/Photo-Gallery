@@ -110,21 +110,3 @@ export function sendFileToPHP(inputFile, directoryName, PHPScript) {
         body: fd,
     })
 }
-
-
-
-    // export function generateID(array) {
-    //     if(array.length === 0) {
-    //         return 0;
-    //     } else {
-    //         if(Math.max(...array) > array.length - 1) {
-    //             for(let i = 0; i < array.length; i++) {
-    //                 if (array.includes(i) === false) {
-    //                     return i;
-    //                 }
-    //             }
-    //         } else {
-    //             return Math.max(...array) + 1;
-    //         }
-    //     }
-    // }
