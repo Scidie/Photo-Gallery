@@ -14,19 +14,17 @@ let json = "",
 handlers.updateJSON(path)
 .then(response => {
   json = response;
-  let galleryListElements = handlers.createGroupOfElements(json, "gallery", "div");
-  let keys = Object.keys(json);
-  let images = {}
+  let galleryNames = Object.keys(json);
+
+
+//creating list elements for each gallery
+  let galleryListElements = handlers.createDivGroup(galleryNames, "gallery")
+  let galleries = Object.keys(json);
+  let images = {};
 
 // preloading all images.
-  keys.forEach(key => {
-    images[key] = {"photos": []};
-    json[key]["photos"].forEach(imageFileName => {
-      let image = new Image();
-      image.src = `./${key}/${imageFileName}`;
-      image.classList.add("photo-style")
-      images[key]["photos"].push(image);
-    })
+  galleries.forEach(value => {
+    images[value] = handlers.createImgGroup(value, json[value]["photos"], "photo-style")
   })
 
 // setting up json - add event listener to button which sends data(creates directory for photos and json properties) to server.
@@ -39,14 +37,14 @@ handlers.updateJSON(path)
     })
   });
 
-// adding event listneres to each gallery list element, clearing edit view, then adding clicked gallery photos.
+// adding event listneres to each gallery list element, which is clearing edit view, then adding clicked gallery photos.
   galleryListElements.forEach(element => {
     element.addEventListener("click", () => {
       photosContainer.innerHTML = "";
       selectedGallery = `${element.textContent}`;
       
-      images[selectedGallery]["photos"].forEach(image => {
-        photosContainer.appendChild(image)
+      images[selectedGallery].forEach(value => {
+        photosContainer.appendChild(value)
       })
     })
   })

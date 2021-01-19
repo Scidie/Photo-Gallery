@@ -10,28 +10,36 @@ export function appendElements(elements, parent) {
     })
 }
 
-
-export function createGroupOfElements(object, className, type, directory) {
-    let elements = [];
-    let array = Object.keys(object);
-    array.forEach(element => {
-        switch(type) {
-            case "div":
-                elements.push(createDivElement(className, element));
-                break;
-            case "img":
-                elements.push(createImgElement(directory, element, className));
-                break;
-          }
-    })
-    return elements;
+export function createDiv(value, className) {
+    let div = document.createElement("div");
+    div.accessKey = value;
+    div.textContent = value;
+    div.className = className;  
+    return div;
 }
 
-export function createDivElement(className, textContent) {
-    let div = document.createElement("div");
-    div.textContent = textContent;
-    div.classList.add(className)
-    return div;
+export function createImg(fileName, directory, className) {
+    let image = document.createElement("img");
+    image.src = `./${directory}/${fileName}`;
+    image.classList.add(className)
+    image.accessKey = `${fileName}`;
+    return image;
+}
+
+export function createDivGroup(array, className) {
+    let divs = [];
+    array.forEach(value => {
+         divs.push(createDiv(value, className))
+    })
+    return divs;
+}
+
+export function createImgGroup(directory, array, className) {
+    let images = [];
+    array.forEach(value => {
+        images.push(createImg(value, directory, className))
+    })
+    return images;
 }
 
 export function createImgElement(directory, fileName, className) {
