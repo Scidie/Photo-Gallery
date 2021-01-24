@@ -17,17 +17,17 @@ handlers.updateJSON(path)
   let galleryNames = Object.keys(json);
 
 
-//creating list elements for each gallery
-  let galleryListElements = handlers.createDivGroup(galleryNames, "gallery")
+//creating elements for each gallery
+  let galleryListElements = handlers.createArrayOfDivs(galleryNames, "gallery")
   let galleries = Object.keys(json);
-  let images = {};
 
-// preloading all images.
+// preloading all images to object
+  let images = {};
   galleries.forEach(value => {
-    images[value] = handlers.createImgGroup(value, json[value]["photos"], "photo-style")
+    images[value] = handlers.createArrayOfImages(value, json[value]["photos"], "photo-style")
   })
 
-// setting up json - add event listener to button which sends data(creates directory for photos and json properties) to server.
+// appending event listner to button, which updates json by new gallery value from input and sends data to server.
   addNewGalleryButton.addEventListener("click", () => {
     handlers.addNewPropertyToObjectFromInput(`${galleryNameInput.value}`, json, {"photos": []})
     handlers.sendDataToPHP("directoryName", `${galleryNameInput.value}`, "addNewDirectory.php")
@@ -37,7 +37,7 @@ handlers.updateJSON(path)
     })
   });
 
-// adding event listneres to each gallery list element, which is clearing edit view, then adding clicked gallery photos.
+// adding event listneres to each gallery list element, which is clearing edit view and then adding clicked gallery photos.
   galleryListElements.forEach(element => {
     element.addEventListener("click", () => {
       photosContainer.innerHTML = "";
@@ -53,8 +53,9 @@ handlers.updateJSON(path)
   handlers.appendElements(galleryListElements, galleriesListPanel);
 
   addPhotoButton.addEventListener("click", () => {
-    document.querySelector("#hidden-add-photo-panel").style.display = "flex";
+    handlers.revealElement(document.querySelector("#hidden-add-photo-panel"), "flex")
   })
+  
 // uploading images to server, setting up json properties.
   document.querySelector("#upload-file-button").addEventListener("click", () => {  
     handlers.addNewValueToArray(json[selectedGallery]["photos"], document.querySelector("#hidden-input-file").files[0].name)

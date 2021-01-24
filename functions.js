@@ -10,7 +10,7 @@ export function appendElements(elements, parent) {
     })
 }
 
-export function createDiv(value, className) {
+export function createDivElement(value, className) {
     let div = document.createElement("div");
     div.accessKey = value;
     div.textContent = value;
@@ -18,7 +18,7 @@ export function createDiv(value, className) {
     return div;
 }
 
-export function createImg(fileName, directory, className) {
+export function createImageElement(fileName, directory, className) {
     let image = document.createElement("img");
     image.src = `./${directory}/${fileName}`;
     image.classList.add(className)
@@ -26,29 +26,21 @@ export function createImg(fileName, directory, className) {
     return image;
 }
 
-export function createDivGroup(array, className) {
+export function createArrayOfDivs(array, className) {
     let divs = [];
     array.forEach(value => {
-         divs.push(createDiv(value, className))
+         divs.push(createDivElement(value, className))
     })
     return divs;
 }
 
-export function createImgGroup(directory, array, className) {
+export function createArrayOfImages(directory, array, className) {
     let images = [];
     array.forEach(value => {
-        images.push(createImg(value, directory, className))
+        images.push(createImageElement(value, directory, className))
     })
     return images;
 }
-
-export function createImgElement(directory, fileName, className) {
-    let imageElement = document.createElement("img");
-    imageElement.src = `./${directory}/${fileName}`;
-    imageElement.classList.add(className);
-    return imageElement;
-}
-
 
 export function appendTemplate(parent, template) {
     parent.innerHTML += template;
@@ -56,19 +48,6 @@ export function appendTemplate(parent, template) {
 
 export function addNewValueToArray(array, value) {
     array.push(value);
-}
-
-export async function uploadFile(inputFile, directoryName, object) {
-    let src = `${directoryName}`;
-    let fd = new FormData();
-    fd.append("file", inputFile.files[0]);
-    fd.append("src", src);
-    fd.append("json", JSON.stringify(object))
-
-    await fetch("upload.php", {
-        method: "POST",
-        body: fd,
-    });
 }
 
 export function hideElement(element) {
