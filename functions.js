@@ -10,6 +10,21 @@ export function appendElements(elements, parent) {
     })
 }
 
+export function createCheckbox(accessKey, className) {
+    let checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.accessKey = accessKey;
+    checkbox.classList.add(className);
+    return checkbox;
+}
+
+export function createInsideImageButton(accessKey, className) {
+    let button = document.createElement("button");
+    button.classList.add(className);
+    button.accessKey = accessKey;
+    return button;
+}
+
 export function createDivElement(value, className) {
     let div = document.createElement("div");
     div.accessKey = value;
@@ -87,5 +102,19 @@ export function sendFileToPHP(inputFile, directoryName, PHPScript) {
         return fetch(PHPScript, {
         method: "POST",
         body: fd,
+    })
+}
+
+export function removeElementsFromArray(elementsToRemove, array) {
+    elementsToRemove.forEach(value => {
+        let indexOfValue = array.indexOf(value)
+        array.splice(indexOfValue, 1)
+    })
+}
+
+export function moveElements(elementsToMove, originalArray, destinationArray) {
+    removeElementsFromArray(elementsToMove, originalArray);
+    elementsToMove.forEach(element => {
+        destinationArray.push(element);
     })
 }

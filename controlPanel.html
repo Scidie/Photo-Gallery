@@ -15,10 +15,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="preloaded-photos-container"></div>
     <div id="title-container">
-        <div id="title">Photo Gallery
-            <div id="author">by Daria Błaszczak</div>
+        <div id="title">Photo Gallery</div>
+        <div id="input-container">
+            <input type="text" id="gallery-name-input" value="">
+            <button id="add-gallery-button"></button>
         </div>
         <div id="navbar-container">
             <a class="navbar-element" href="./index.html">HOME
@@ -33,24 +34,21 @@
         </div>
     </div>
     <div id="global-container">
-        <div id="input-container">
-            <input type="text" id="gallery-name-input" value="">
-            <button id="add-gallery-button"></button>
-        </div>
         <div id="edit-galleries-section">
-            <div id="galleries-list-panel" class="panel-style"></div>
-            <div id="edit-gallery-panel" class="panel-style">
-                <div id="hidden-add-photo-panel">
-                    <input type="file" id="hidden-input-file">
-                    <button id="upload-file-button">upload</button>
+            <div id="gallery-list-panel" class="panel-style"></div>
+            <div id="edit-view">
+                <div id="edit-gallery-panel" class="panel-style">
+                    <div id="hidden-add-photo-panel">
+                        <input type="file" id="hidden-input-file">
+                        <button id="upload-file-button">upload</button>
+                    </div>
+                    <div id="photos-container"></div>
                 </div>
-                <div id="photos-container"></div>
-            </div>
-            <div id="tools-panel" class="panel-style">
-                <button class="tools-panel-button">edit</button>
-                <button class="tools-panel-button">move</button>
-                <button class="tools-panel-button">delete</button>
-                <button class="tools-panel-button" id="add-photo-button">add photo</button>
+                <div id="tools-panel" class="panel-style">
+                    <button class="tools-panel-button" id="move-photo-button">move</button>
+                    <button class="tools-panel-button" id="delete-photo-button">delete</button>
+                    <button class="tools-panel-button" id="add-photo-button">add photo</button>
+                </div>
             </div>
         </div>
     </div>
