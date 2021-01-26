@@ -33,7 +33,7 @@ export function createDivElement(value, className) {
     return div;
 }
 
-export function createImageElement(fileName, directory, className) {
+export function createImageElement(directory, fileName, className) {
     let image = document.createElement("img");
     image.src = `./${directory}/${fileName}`;
     image.classList.add(className)
@@ -52,7 +52,7 @@ export function createArrayOfDivs(array, className) {
 export function createArrayOfImages(directory, array, className) {
     let images = [];
     array.forEach(value => {
-        images.push(createImageElement(value, directory, className))
+        images.push(createImageElement(directory, value, className))
     })
     return images;
 }
@@ -111,10 +111,72 @@ export function removeElementsFromArray(elementsToRemove, array) {
         array.splice(indexOfValue, 1)
     })
 }
+export function removeArrayElementByAttribute(value, attribute, DOMArray) {
+    DOMArray.forEach(element => {
+        if (element.getAttribute(attribute) === value) {
+            DOMArray.splice(DOMArray.indexOf(element), 1)
+        }
+    })
+}
+
+export function removeArrayElementsByAttribute(values, attribute, DOMArray) {
+    values.forEach(value => {
+        removeArrayElementByAttribute(value, attribute, DOMArray)
+    })
+}
+
+export function removeDOMElementByAttribute(value, attribute, DOMArray) {
+    DOMArray.forEach(element => {
+        if (element.getAttribute(attribute) === value) {
+            element.remove()
+        }
+    })
+}
+
+export function removeDOMElementsByAttribute(values, attribute, DOMArray) {
+    values.forEach(value => {
+        removeDOMElementByAttribute(value, attribute, DOMArray)
+    })
+}
+
 
 export function moveElements(elementsToMove, originalArray, destinationArray) {
     removeElementsFromArray(elementsToMove, originalArray);
     elementsToMove.forEach(element => {
         destinationArray.push(element);
     })
+}
+
+export function filterELements(arrayOfDOMElements, callback) {
+    let filteredArray = []
+    arrayOfDOMElements.forEach(element => {
+        if (callback(element) === true) {
+            filteredArray.push(element)
+        }
+    })
+    return filteredArray;
+}
+
+export function filterAttributesFromElements(arrayOfDOMElements, attributeName, callback) {
+    let filteredArray = []
+    arrayOfDOMElements.forEach(element => {
+        if (callback(element) === true) {
+            filteredArray.push(element.getAttribute(attributeName))
+        }
+    })
+
+    return filteredArray;
+}
+
+export function getAttributesFromElements(arrayOfDOMElements, attributeName) {
+    let filteredArray = []
+    arrayOfDOMElements.forEach(element => {
+        filteredArray.push(element.getAttribute(attributeName))
+    })
+    return filteredArray;
+}
+
+export function arrayRemove(array, value) {
+    let newArray = array.filter(element => element != value);
+    return newArray;
 }

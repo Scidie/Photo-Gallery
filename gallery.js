@@ -29,20 +29,19 @@ handlers.updateJSON(path)
 // preloading all images to object
   let images = {};
   galleryNames.forEach(value => {
-    images[value] = handlers.createArrayOfImages(value, json[value]["photos"], "photo-style")
+    images[value] = handlers.createArrayOfImages("photos", json[value]["photos"], "photo-style");
   })
 
 // appending event listner to button, which updates json by new gallery value from input and sends data to server.
   addGalleryButton.addEventListener("click", () => {
     handlers.addNewPropertyToObjectFromInput(`${inputArea.value}`, json, {"photos": []})
-    handlers.sendDataToPHP("directoryName", `${inputArea.value}`, "addNewDirectory.php")
     handlers.sendDataToPHP("json", json, "uploadJSON.php")
     .then(() => {
       location.reload();
     })
   });
 
-// adding event listneres to each gallery list element, which is clearing edit view and then adding clicked gallery photos.
+// adding event listneres to each gallery list element, which is clearing edit view and then adding clicked gallery photos from preloaded object
   galleryListElements.forEach(element => {
     element.addEventListener("click", () => {
       photosContainer.innerHTML = "";
@@ -51,6 +50,7 @@ handlers.updateJSON(path)
       images[selectedGallery].forEach(value => {
         let imageContainer = document.createElement("div")
         imageContainer.classList.add("image-container");
+        imageContainer.accessKey = value.accessKey;
         imageContainer.appendChild(value);
         imageContainer.appendChild(handlers.createCheckbox(value.accessKey, "checkbox"))
         imageContainer.appendChild(handlers.createInsideImageButton(value.accessKey, "inside-image-button"))
@@ -59,18 +59,16 @@ handlers.updateJSON(path)
     })
   })
 
-// adding event listener for deleting elements form galleries
+// adding event listener to button which deletes elements from galleries
 deletePhotoButton.addEventListener("click", () => {
-  let checkBoxes = photosContainer.querySelectorAll("input");
-  let markedCheckBoxes = [];
-  checkBoxes.forEach(element => {
-    element.checked === true ? markedCheckBoxes.push(element.accessKey) : console.log("box is not checked");
-  })
- 
-  handlers.removeElementsFromArray(markedCheckBoxes, json[selectedGallery]["photos"])
+  let markedCheckboxes = handlers.filterELements(photosContainer.querySelectorAll("input"), el => el.checked === true)
+  let accessKeys = handlers.getAttributesFromElements(markedCheckboxes, "accessKey");
+
+  handlers.removeElementsFromArray(accessKeys, json[selectedGallery]["photos"])
   handlers.sendDataToPHP("json", json, "uploadJSON.php")
   .then(() => {
-    location.reload();
+    handlers.removeArrayElementsByAttribute(accessKeys, "accessKey", images[selectedGallery])
+    handlers.removeDOMElementsByAttribute(accessKeys, "accessKey", photosContainer.querySelectorAll(".image-container"))
   })
 })
 
@@ -93,17 +91,18 @@ movePhotoButton.addEventListener("click", () => {
       handlers.moveElements(markedCheckBoxes, json[selectedGallery]["photos"], json[value]["photos"]);
       handlers.sendDataToPHP("json", json, "uploadJSON.php")
       .then(() => {
-        location.reload();
+        photosContainer.querySelectorAll(".image-container").forEach(element => {
+          let input = element.querySelector("input");
+          if (input.checked === true) {
+            element.remove();
+            let index = images[selectedGallery].indexOf(element.querySelector("img"));
+            images[selectedGallery].splice(index, 1);
+            images[value].push(element.querySelector("img"));
+          }
+        })
       })
     })
   })
-
-  // handlers.moveElements(markedCheckBoxes, )
-  // handlers.removeElementsFromArray(markedCheckBoxes, json[selectedGallery]["photos"])
-  // handlers.sendDataToPHP("json", json, "uploadJSON.php")
-  // .then(() => {
-  //   location.reload();
-  // })
 })
 
 
@@ -111,16 +110,27 @@ movePhotoButton.addEventListener("click", () => {
   handlers.appendElements(galleryListElements, galleryListPanel);
 
   addPhotoButton.addEventListener("click", () => {
+    document.querySelector("#blur-window").style.display = "flex";
     handlers.revealElement(document.querySelector("#hidden-add-photo-panel"), "flex")
   })
   
 // uploading images to server, setting up json properties.
   document.querySelector("#upload-file-button").addEventListener("click", () => {  
+    let fileName = document.querySelector("#hidden-input-file").files[0].name;
     handlers.addNewValueToArray(json[selectedGallery]["photos"], document.querySelector("#hidden-input-file").files[0].name)
     handlers.sendDataToPHP("json", json, "uploadJSON.php")
     handlers.sendFileToPHP(document.querySelector("#hidden-input-file").files[0], selectedGallery, "uploadFile.php" )
     .then(() => {
-      location.reload();
+      handlers.hideElement(document.querySelector("#blur-window"));
+      let imageContainer = document.createElement("div")
+      let image = handlers.createImageElement("photos", fileName, "photo-style");
+      images[selectedGallery].push(image);
+      imageContainer.classList.add("image-container");
+      imageContainer.accessKey = image.accessKey;
+      imageContainer.appendChild(image);
+      imageContainer.appendChild(handlers.createCheckbox(image.accessKey, "checkbox"))
+      imageContainer.appendChild(handlers.createInsideImageButton(image.accessKey, "inside-image-button"))
+      photosContainer.appendChild(imageContainer)
     })
   })
 })

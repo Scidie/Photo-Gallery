@@ -12,10 +12,18 @@
 
 #hidden-add-photo-panel {
     display: none;
+    top: 208px;
+    color: white;
     z-index: 10;
     position: absolute;
     justify-content: center;
     align-items: center;
+    background: gray;
+    width: 400px;
+    height: 70px;
+    border-radius: 6px;
+    -webkit-box-shadow: 2px 5px 15px 1px rgb(0 0 0 / 63%);
+    box-shadow: 2px 5px 15px 1px rgb(0 0 0 / 63%);
 }
 
 body {
@@ -24,10 +32,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* background-color: #e6e6e6; */
-    background: url(./images/grayabstractionBlur1.jpg);
-    background-size: cover;
-    
+    background-color: #e6e6e6;
 }
 
 #global-container {
@@ -35,9 +40,8 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    
     align-items: center;
-    /* background-color: #c3bebe; */
+    background-color: #d2d2d2;
 }
 
 #title-container {
@@ -47,6 +51,7 @@ body {
     align-items: center;
     justify-content: space-evenly;
     background-color: #ffffff8f;
+    background: url(./images/abstragrayBluredLighted.png);
     -webkit-box-shadow: -1px 15px 20px -7px rgba(0,0,0,0.58); 
     box-shadow: 3px 2px 20px -7px rgb(0 0 0 / 58%);
     /* background: url(./images/image-title-background.jpg);
@@ -93,7 +98,7 @@ body {
 
 .line {
     width: 0;
-    height: 4px;
+    height: 3px;
     background-color: #dc7409;
     transition: 0.2s;
 }
@@ -115,6 +120,9 @@ body {
 }
 
 #edit-gallery-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 920px;
     background-color: white;
     border-radius: 6px;
@@ -125,8 +133,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 150px;
-    
 }
 
 #tools-panel > .tools-panel-button {
@@ -287,9 +293,21 @@ body {
     height: 30px;
     background: url(./images/pencil2.png);
     background-size: cover;
-    border-radius: 10px;
+    border-radius: 50%;
     outline: none;
-    border: none;
+    border: none; 
+}
+
+.inside-image-button:hover {
+    animation: pencilRotate 0.6s;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pencilRotate {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(10deg);}
+    100% {transform: rotate(0deg);}
 }
 
 .checkbox {
@@ -316,6 +334,14 @@ body {
     background-color: white;
 }
 
-.destination-gallery {
-
+#blur-window {
+    display: none;
+    top: 0;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100vw;
+    background-color: rgb(58 58 58 / 80%);
+    z-index: 10;
 }
