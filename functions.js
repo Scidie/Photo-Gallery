@@ -4,13 +4,13 @@ export async function updateJSON(path) {
     return json;
 }
 
-export function appendElements(elements, parent) {
+export function appendDOMElements(elements, parent) {
     elements.forEach(element => {
         parent.appendChild(element);
     })
 }
 
-export function createCheckbox(accessKey, className) {
+export function createDOMCheckbox(accessKey, className) {
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.accessKey = accessKey;
@@ -25,15 +25,19 @@ export function createInsideImageButton(accessKey, className) {
     return button;
 }
 
-export function createDivElement(value, className) {
+export function createDivDOMElement(value, className, accessKey) {
     let div = document.createElement("div");
-    div.accessKey = value;
     div.textContent = value;
-    div.className = className;  
+    div.className = className;
+    if (accessKey !== undefined) {
+        div.accessKey = accessKey;
+    } else {
+        div.accessKey = value;
+    }
     return div;
 }
 
-export function createImageElement(directory, fileName, className) {
+export function createImageDOMElement(directory, fileName, className) {
     let image = document.createElement("img");
     image.src = `./${directory}/${fileName}`;
     image.classList.add(className)
@@ -41,35 +45,35 @@ export function createImageElement(directory, fileName, className) {
     return image;
 }
 
-export function createArrayOfDivs(array, className) {
+export function createArrayOfDOMDivs(array, className) {
     let divs = [];
     array.forEach(value => {
-         divs.push(createDivElement(value, className))
+         divs.push(createDivDOMElement(value, className))
     })
     return divs;
 }
 
-export function createArrayOfImages(directory, array, className) {
+export function createArrayOfDOMImages(directory, array, className) {
     let images = [];
     array.forEach(value => {
-        images.push(createImageElement(directory, value, className))
+        images.push(createImageDOMElement(directory, value, className))
     })
     return images;
 }
 
-export function appendTemplate(parent, template) {
-    parent.innerHTML += template;
+export function appendHTMLValue(parent, value) {
+    parent.innerHTML += value;
 }
 
 export function addNewValueToArray(array, value) {
     array.push(value);
 }
 
-export function hideElement(element) {
+export function hideDOMElement(element) {
     element.style.display = "none";
 }
 
-export function revealElement(element, cssDisplayValue) {
+export function revealDOMElement(element, cssDisplayValue) {
     element.style.display = cssDisplayValue;
 }
 
@@ -111,7 +115,9 @@ export function removeElementsFromArray(elementsToRemove, array) {
         array.splice(indexOfValue, 1)
     })
 }
-export function removeArrayElementByAttribute(value, attribute, DOMArray) {
+
+//DOM manipulation functions
+export function removeDOMElementFromArrayByAttribute(value, attribute, DOMArray) {
     DOMArray.forEach(element => {
         if (element.getAttribute(attribute) === value) {
             DOMArray.splice(DOMArray.indexOf(element), 1)
@@ -119,11 +125,13 @@ export function removeArrayElementByAttribute(value, attribute, DOMArray) {
     })
 }
 
-export function removeArrayElementsByAttribute(values, attribute, DOMArray) {
+export function removeDOMElementsFromArrayByAttribute(values, attribute, DOMArray) {
     values.forEach(value => {
-        removeArrayElementByAttribute(value, attribute, DOMArray)
+        removeDOMElementFromArrayByAttribute(value, attribute, DOMArray)
     })
 }
+
+
 
 export function removeDOMElementByAttribute(value, attribute, DOMArray) {
     DOMArray.forEach(element => {
@@ -140,14 +148,14 @@ export function removeDOMElementsByAttribute(values, attribute, DOMArray) {
 }
 
 
-export function moveElements(elementsToMove, originalArray, destinationArray) {
+export function moveValuesFromArrayToArray(elementsToMove, originalArray, destinationArray) {
     removeElementsFromArray(elementsToMove, originalArray);
     elementsToMove.forEach(element => {
         destinationArray.push(element);
     })
 }
 
-export function filterELements(arrayOfDOMElements, callback) {
+export function filterDOMElements(arrayOfDOMElements, callback) {
     let filteredArray = []
     arrayOfDOMElements.forEach(element => {
         if (callback(element) === true) {
@@ -157,25 +165,26 @@ export function filterELements(arrayOfDOMElements, callback) {
     return filteredArray;
 }
 
-export function filterAttributesFromElements(arrayOfDOMElements, attributeName, callback) {
-    let filteredArray = []
+export function filterDOMElementsAttributes(arrayOfDOMElements, attributeName, callback) {
+    let filteredAttributesArray = []
     arrayOfDOMElements.forEach(element => {
         if (callback(element) === true) {
-            filteredArray.push(element.getAttribute(attributeName))
+            filteredAttributesArray.push(element.getAttribute(attributeName))
         }
     })
 
-    return filteredArray;
+    return filteredAttributesArray;
 }
 
-export function getAttributesFromElements(arrayOfDOMElements, attributeName) {
+export function getAttributesFromDOMElements(arrayOfDOMElements, attributeName) {
     let filteredArray = []
     arrayOfDOMElements.forEach(element => {
         filteredArray.push(element.getAttribute(attributeName))
     })
     return filteredArray;
 }
-
+    
+//returns new array without one indicated value
 export function arrayRemove(array, value) {
     let newArray = array.filter(element => element != value);
     return newArray;

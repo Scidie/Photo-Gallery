@@ -36,12 +36,13 @@ body {
 }
 
 #global-container {
+    width: 100%;
     padding: 40px;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     align-items: center;
-    background-color: #d2d2d2;
+    /* background-color: #d2d2d2; */
 }
 
 #title-container {
@@ -51,11 +52,9 @@ body {
     align-items: center;
     justify-content: space-evenly;
     background-color: #ffffff8f;
-    background: url(./images/abstragrayBluredLighted.png);
     -webkit-box-shadow: -1px 15px 20px -7px rgba(0,0,0,0.58); 
     box-shadow: 3px 2px 20px -7px rgb(0 0 0 / 58%);
-    /* background: url(./images/image-title-background.jpg);
-    background-size: cover; */
+    background-size: cover;
 }
 
 #title {
@@ -104,6 +103,7 @@ body {
 }
 
 #edit-galleries-section {
+    width: 90vw;
     display: flex;
     flex-direction: column;
 }
@@ -123,10 +123,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 920px;
-    background-color: white;
+    width: 83vw;
     border-radius: 6px;
-    background-color: #ffffffbd;
+    background-color: #3a39391c;
 }
 
 #tools-panel {
@@ -165,6 +164,8 @@ body {
     }
 }
 
+
+
 .gallery {
     display: flex;
     height: 40px;
@@ -178,14 +179,30 @@ body {
     transition: 0.2s;
     color: white;
     font-size: larger;
-    -webkit-box-shadow: 2px 5px 15px 1px rgba(0,0,0,0.63); 
-    box-shadow: 2px 5px 15px 1px rgba(0,0,0,0.63);
+    user-select: none;
 }
 
-.gallery:hover {
-    background-color: #f3bb15;
-    /* transform: scale(1.01); */
-    
+.gallery-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gallery-selected {
+    transform: scale(1.1);
+    -webkit-box-shadow: 5px 5px 11px -5px rgba(0,0,0,0.79); 
+    box-shadow: 5px 5px 11px -5px rgba(0,0,0,0.79);
+}
+
+.pointer-img {
+    width: 45px;
+}
+.gallery-pointer-container {
+    position: relative;
+    width: 30px;
+    height: 20px;
+    bottom: 34px;
+    display: inline-block;
 }
 
 #main-container {
@@ -230,7 +247,7 @@ body {
 
 #gallery-name-input {
     width: 420px;
-    height: 52px;
+    height: 42px;
     font-size: 30px;
     color:rgb(56, 56, 56);
     padding: 10px;
@@ -255,7 +272,7 @@ body {
 }
 
 #input-container {
-    padding: 30px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -289,8 +306,8 @@ body {
     position: absolute;
     justify-self: flex-end;
     margin: 0px 15px 0 0;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background: url(./images/pencil2.png);
     background-size: cover;
     border-radius: 50%;
@@ -311,8 +328,10 @@ body {
 }
 
 .checkbox {
-    width: 15px;
-    height: 15px;
+    position: relative;
+    right: 15px;
+    width: 16px;
+    height: 16px;
     
 }
 
@@ -324,24 +343,60 @@ body {
 
 #gallery-list-panel {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
 }
-
-.move-menu-element {
+.choose-gallery-menu {
     display: flex;
     flex-direction: column;
     position: absolute;
     background-color: white;
 }
 
-#blur-window {
+#menu-window {
     display: none;
     top: 0;
     position: absolute;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    width: 100vw;
-    background-color: rgb(58 58 58 / 80%);
+    height: 1304px;
+    width: 100%;
+    background-color: rgb(58 58 58 / 10%);
     z-index: 10;
+}
+
+#main-window {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #9c9889;
+}
+
+.blur {
+    filter: blur(3px);
+}
+
+.loading-animation {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 400px;
+    background: url(./images/circleCuted.png);
+    background-size: cover;
+    animation: circle 1.5s;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes circle {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
