@@ -9,6 +9,9 @@
 
 import * as handlers from "./functions.js"
 
+
+
+
 // defining global variables
 let json = "",
     galleryListPanel = document.querySelector("#gallery-list-panel"),
@@ -33,6 +36,11 @@ handlers.updateJSON(path)
   json = response;
   let galleryNames = Object.keys(json);
 
+// preloading all images to object
+  let images = {};
+  galleryNames.forEach(value => {
+  images[value] = handlers.createArrayOfDOMImages("photos", json[value]["photos"], "photo-style");
+})
 
 //creating DOM elements for each gallery in json
   let galleryListElements = handlers.createArrayOfDOMDivs(galleryNames, "gallery")
@@ -40,20 +48,14 @@ handlers.updateJSON(path)
     value.style.backgroundColor = colors[Math.floor((Math.random() * colors.length))]
   })
 
-  let galleryListElementsInContainers = []
+  let photoElements = []
   galleryListElements.forEach(element => {
     let galleryContainer = handlers.createDivDOMElement("", "gallery-container", element.accessKey)
     let galleryPointerContainer = handlers.createDivDOMElement("", "gallery-pointer-container", element.accessKey)
     
     galleryContainer.appendChild(galleryPointerContainer)
     galleryContainer.appendChild(element);
-    galleryListElementsInContainers.push(galleryContainer);
-  })
-
-// preloading all images to object
-  let images = {};
-  galleryNames.forEach(value => {
-    images[value] = handlers.createArrayOfDOMImages("photos", json[value]["photos"], "photo-style");
+    photoElements.push(galleryContainer);
   })
 
 // appending event listner to button, which updates json by new gallery value from input and sends data to server.
@@ -132,9 +134,8 @@ movePhotoButton.addEventListener("click", () => {
   })
 })
 
-
 // appending gallery list elements to galleries panel.
-  handlers.appendDOMElements(galleryListElementsInContainers, galleryListPanel);
+  handlers.appendDOMElements(photoElements, galleryListPanel);
 
   addPhotoButton.addEventListener("click", () => {
     document.querySelector("#menu-window").style.display = "flex";
@@ -142,7 +143,7 @@ movePhotoButton.addEventListener("click", () => {
     handlers.revealDOMElement(document.querySelector("#hidden-add-photo-panel"), "flex")
   })
   
-// uploading images to server, setting up json properties.
+// uploading images and json properties to server, updating DOM dynamically.
   document.querySelector("#upload-file-button").addEventListener("click", () => {  
     let fileName = document.querySelector("#hidden-input-file").files[0].name;
     let loadingAnimation = document.createElement("div")
