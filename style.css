@@ -91,17 +91,6 @@ body {
     font-size: larger;
 }
 
-.navbar-element:hover > .line {
-   width: 100%;
-}
-
-.line {
-    width: 0;
-    height: 3px;
-    background-color: #dc7409;
-    transition: 0.2s;
-}
-
 #edit-galleries-section {
     width: 90vw;
     display: flex;
@@ -329,10 +318,9 @@ body {
 
 .checkbox {
     position: relative;
-    right: 15px;
-    width: 16px;
+    right: 23px;
+    width: 30px;
     height: 16px;
-    
 }
 
 #edit-view {
@@ -411,4 +399,9 @@ body {
 
 .label {
     padding: 5px;
+}
+
+.logout-button {
+    height: 40px;
+    transition: 0.2s;
 }

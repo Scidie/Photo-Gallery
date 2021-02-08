@@ -1,4 +1,5 @@
-export async function updateJSON(path) {
+
+export async function getJSONFromServer(path) {
     const response = await fetch(path);
     const json = await response.json();
     return json;
@@ -99,6 +100,16 @@ export function sendDataToPHP(label, data, PHPScript) {
     }
 }
 
+export function sendJSONToServer(json, path, PHPScript) {
+    let fd = new FormData()
+    fd.append("json", JSON.stringify(json))
+    fd.append("path", path)
+    return fetch(PHPScript, {
+    method: "POST",
+    body: fd,
+    })
+}
+
 export function sendFileToPHP(inputFile, directoryName, PHPScript) {
     let fd = new FormData();
         fd.append("file", inputFile)
@@ -184,8 +195,22 @@ export function getAttributesFromDOMElements(arrayOfDOMElements, attributeName) 
     return filteredArray;
 }
     
-//returns new array without one indicated value
+//returns new array without indicated value
 export function arrayRemove(array, value) {
     let newArray = array.filter(element => element != value);
     return newArray;
+}
+
+export async function getIpAddress(PHPScript) {
+    let response = await fetch(PHPScript);
+    let json = response.json();
+    return json;
+}
+
+//calculate diffference between two points in time in hours
+export function calcTime(timeLogged) {
+    let now = new Date().getTime();
+    let before = timeLogged;
+    let difference = now - before;
+    return difference/3600000;
 }

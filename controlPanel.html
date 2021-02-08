@@ -29,24 +29,18 @@
                 <button id="add-gallery-button"></button>
             </div>
             <div id="navbar-container">
-                <a class="navbar-element" href="./index.html">HOME
-                    <div class="line"></div>
-                </a>
-                <a class="navbar-element" href="./galleries.html">GALLERIES
-                    <div class="line"></div>
-                </a>
-                <a class="navbar-element" href="./controlPanel.html">CONTROL
-                    <div class="line"></div>
-                </a>
+                <a class="navbar-element" href="./index.html">HOME</a>
+                <a class="navbar-element" href="./galleries.html">GALLERIES</a>
+                <a class="navbar-element" href="./controlPanel.html">CONTROL</a>
+                <img class="logout-button" src="./images/logoutButton.png" alt="">
             </div>
         </div>
-        <div id="logging-section" style="display: flex;">
-            <div class="label">login</div><input id="login" type="text"">
+        <div id="logging-section" style="display: none;">
             <div class="label">password</div><input id="password" type="text">
             <button id="sign-in-button" style="margin: 5px;">Sign in</button>
         </div>
-        <div id="global-container" style="display: none;">
-            <div id="edit-galleries-section">
+        <div id="global-container">
+            <div id="edit-galleries-section" style="display: none;">
                 <div id="gallery-list-panel" class="panel-style"></div>
                 <div id="edit-view">
                     <div id="edit-gallery-panel" class="panel-style">
@@ -56,12 +50,12 @@
                         <button class="tools-panel-button" id="move-photo-button">move</button>
                         <button class="tools-panel-button" id="delete-photo-button">delete</button>
                         <button class="tools-panel-button" id="add-photo-button">add photo</button>
+                        <button class="tools-panel-button" id="delete-gallery">edit gallery</button>
                     </div>
                 </div>
             </div>
         </div>
         <script type="module" src="./gallery.js"></script>
-        <!-- <script type="module" src="./controlPanel.js"></script> -->
     </div>
 </body>
 </html>
