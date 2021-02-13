@@ -51,7 +51,7 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    background-color: #ffffff8f;
+    background-color: #f7f7f7;
     -webkit-box-shadow: -1px 15px 20px -7px rgba(0,0,0,0.58); 
     box-shadow: 3px 2px 20px -7px rgb(0 0 0 / 58%);
     background-size: cover;
@@ -402,6 +402,14 @@ body {
 }
 
 .logout-button {
-    height: 40px;
-    transition: 0.2s;
+    height: 30px;
+    transition: 0.4s;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: #c30707;
+}
+
+.logout-button:hover {
+    
 }

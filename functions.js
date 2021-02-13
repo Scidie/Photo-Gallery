@@ -1,8 +1,27 @@
-
 export async function getJSONFromServer(path) {
     const response = await fetch(path);
     const json = await response.json();
     return json;
+}
+
+export function sendJSONToServer(json, path, PHPScript) {
+    let fd = new FormData()
+    fd.append("json", JSON.stringify(json))
+    fd.append("path", path)
+    return fetch(PHPScript, {
+        method: "POST",
+        body: fd,
+    })
+}
+
+export function sendFileToPHP(inputFile, directoryName, PHPScript) {
+    let fd = new FormData();
+    fd.append("file", inputFile)
+    fd.append("directoryName", directoryName)
+    return fetch(PHPScript, {
+        method: "POST",
+        body: fd,
+    })
 }
 
 export function appendDOMElements(elements, parent) {
@@ -49,7 +68,7 @@ export function createImageDOMElement(directory, fileName, className) {
 export function createArrayOfDOMDivs(array, className) {
     let divs = [];
     array.forEach(value => {
-         divs.push(createDivDOMElement(value, className))
+        divs.push(createDivDOMElement(value, className))
     })
     return divs;
 }
@@ -82,44 +101,6 @@ export function addNewPropertyToObjectFromInput(input, object, value) {
     object[input] = value;
 }
 
-export function sendDataToPHP(label, data, PHPScript) {
-    let fd = new FormData();
-    switch(typeof data) {
-        case "object":
-            fd.append(label, JSON.stringify(data))
-            return fetch(PHPScript, {
-            method: "POST",
-            body: fd,
-        })
-        case "string":
-            fd.append(label, data)
-            return fetch(PHPScript, {
-            method: "POST",
-            body: fd,
-        })
-    }
-}
-
-export function sendJSONToServer(json, path, PHPScript) {
-    let fd = new FormData()
-    fd.append("json", JSON.stringify(json))
-    fd.append("path", path)
-    return fetch(PHPScript, {
-    method: "POST",
-    body: fd,
-    })
-}
-
-export function sendFileToPHP(inputFile, directoryName, PHPScript) {
-    let fd = new FormData();
-        fd.append("file", inputFile)
-        fd.append("directoryName", directoryName)
-        return fetch(PHPScript, {
-        method: "POST",
-        body: fd,
-    })
-}
-
 export function removeElementsFromArray(elementsToRemove, array) {
     elementsToRemove.forEach(value => {
         let indexOfValue = array.indexOf(value)
@@ -142,8 +123,6 @@ export function removeDOMElementsFromArrayByAttribute(values, attribute, DOMArra
     })
 }
 
-
-
 export function removeDOMElementByAttribute(value, attribute, DOMArray) {
     DOMArray.forEach(element => {
         if (element.getAttribute(attribute) === value) {
@@ -157,7 +136,6 @@ export function removeDOMElementsByAttribute(values, attribute, DOMArray) {
         removeDOMElementByAttribute(value, attribute, DOMArray)
     })
 }
-
 
 export function moveValuesFromArrayToArray(elementsToMove, originalArray, destinationArray) {
     removeElementsFromArray(elementsToMove, originalArray);
@@ -194,7 +172,7 @@ export function getAttributesFromDOMElements(arrayOfDOMElements, attributeName) 
     })
     return filteredArray;
 }
-    
+
 //returns new array without indicated value
 export function arrayRemove(array, value) {
     let newArray = array.filter(element => element != value);
@@ -212,5 +190,5 @@ export function calcTime(timeLogged) {
     let now = new Date().getTime();
     let before = timeLogged;
     let difference = now - before;
-    return difference/3600000;
+    return difference / 3600000;
 }
