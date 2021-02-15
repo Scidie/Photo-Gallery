@@ -13,21 +13,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="menu-window">
-        <div id="hidden-add-photo-panel">
+        <div id="hidden-container">
             <input type="file" id="hidden-input-file">
             <button id="upload-file-button">upload</button>
+        </div>
+    </div>
+    <div id="input-container">
+        <div id="hidden-container">
+            <input type="text" id="gallery-name-input" value="">
+            <button id="add-gallery">add gallery</button>
         </div>
     </div>
     <div id="main-window">
         <div id="title-container">
             <div id="title">Photo Gallery</div>
-            <div id="input-container">
-                <input type="text" id="gallery-name-input" value="">
-                <button id="add-gallery-button"></button>
-            </div>
             <div id="navbar-container">
                 <a class="navbar-element" href="./index.html">HOME</a>
                 <a class="navbar-element" href="./galleries.html">GALLERIES</a>
@@ -41,17 +47,29 @@
         </div>
         <div id="global-container">
             <div id="edit-galleries-section" style="display: none;">
-                <div id="gallery-list-panel" class="panel-style"></div>
+                <div id="gallery-list-panel" class="panel-style">
+                    <div id="add-gallery-button">+</div>
+                </div>
                 <div id="edit-view">
                     <div id="edit-gallery-panel" class="panel-style">
+                        <div id="tools">
+                            <div id="photos-tools" class="panel-style">
+                                <button class="tools-panel-button" id="move-photo-button">move</button>
+                                <button class="tools-panel-button" id="delete-photo-button">delete</button>
+                                <button class="tools-panel-button" id="add-photo-button">add</button>
+                                <button class="tools-panel-button" id="delete-gallery">edit</button>
+                            </div>
+                        </div>
+
                         <div id="photos-container"></div>
+
+                        <div id="tools-bottom">
+                            <div id="tools-bottom-inner-wrapper">
+                                <button class="tools-panel-button" id="delete-gallery-button">delete gallery</button>
+                            </div>
+                        </div>
                     </div>
-                    <div id="tools-panel" class="panel-style">
-                        <button class="tools-panel-button" id="move-photo-button">move</button>
-                        <button class="tools-panel-button" id="delete-photo-button">delete</button>
-                        <button class="tools-panel-button" id="add-photo-button">add photo</button>
-                        <button class="tools-panel-button" id="delete-gallery">edit gallery</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>

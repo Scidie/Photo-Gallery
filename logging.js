@@ -21,7 +21,7 @@ handlers.getJSONFromServer("userData.json")
         ipAddress = ip;
         for (let i = 0; i < userData["loggedUsers"].length; i++) {
           if (userData["loggedUsers"][i]["ipAddress"] === ip && handlers.calcTime(userData["loggedUsers"][i]["timeLogged"]) < 6) {
-            singOutButton.style.backgroundColor = "blue";
+            singOutButton.style.backgroundColor = "green";
             userLogged = true;
             editGalleriesSection.style.display = "flex";
             userData["loggedUsers"][i]["ipAddress"] = ip;

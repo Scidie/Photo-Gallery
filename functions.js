@@ -45,6 +45,13 @@ export function createInsideImageButton(accessKey, className) {
     return button;
 }
 
+export function createInsideImageSimbol(accessKey, className) {
+    let simbol = document.createElement("div");
+    simbol.classList.add(className)
+    simbol.accessKey = accessKey;
+    return simbol;
+}
+
 export function createDivDOMElement(value, className, accessKey) {
     let div = document.createElement("div");
     div.textContent = value;
