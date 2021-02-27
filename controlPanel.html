@@ -17,47 +17,75 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="menu-window">
-        <div id="hidden-container">
+    <div id="upload-file-menu-window" class="hidden-menu-container-style">
+        <div id="upload-file-container" class="menu-window-inner-container">
             <input type="file" id="hidden-input-file">
-            <button id="upload-file-button">upload</button>
+            <button id="upload-file-button" class="blue-button">wyślij</button>
         </div>
     </div>
-    <div id="input-container">
-        <div id="hidden-container">
+    <div id="add-gallery-menu-window" class="hidden-menu-container-style">
+        <div class="menu-window-inner-container">
             <input type="text" id="gallery-name-input" value="">
-            <button id="add-gallery">add gallery</button>
+            <button id="add-gallery-button" class="blue-button">dodaj galerie</button>
+        </div>
+    </div>
+    <div id="gallery-menu-window" class="hidden-menu-container-style">
+        <div class="menu-window-inner-container">
+            <input type="text" id="change-gallery-name-input" value="">
+            <button id="change-gallery-name-button" class="blue-button">zapisz</button>
+        </div>
+    </div>
+    <div id="move-photos-menu-window" class="hidden-menu-container-style">
+        <div class="menu-window-inner-container">
+            <div class="choose-gallery-menu"></div>
+        </div>
+    </div>
+    <div id="photos-order-menu-window" class="hidden-menu-container-style">
+        <div id="photos-order-menu-inner-container">
+            <div id="empty-slots-container"></div>
+            <div id="photos-to-choose-from-container"></div>
         </div>
     </div>
     <div id="main-window">
         <div id="title-container">
             <div id="title">Photo Gallery</div>
             <div id="navbar-container">
-                <a class="navbar-element" href="./index.html">HOME</a>
-                <a class="navbar-element" href="./galleries.html">GALLERIES</a>
-                <a class="navbar-element" href="./controlPanel.html">CONTROL</a>
+                <a class="navbar-element" href="./index.html">BLOG</a>
+                <a class="navbar-element" href="./galleries.html">GALERIA</a>
+                <a class="navbar-element" href="./controlPanel.html">PANEL STEROWANIA</a>
+                <div draggable="true" style="cursor: move;">move me!</div>
                 <img class="logout-button" src="./images/logoutButtonTransparent.png" alt="">
             </div>
         </div>
         <div id="logging-section" style="display: none;">
-            <div class="label">password</div><input id="password" type="text">
-            <button id="sign-in-button" style="margin: 5px;">Sign in</button>
+            <div class="label">hasło</div><input id="password" type="text">
+            <button id="sign-in-button" style="margin: 5px;">zaloguj</button>
         </div>
         <div id="global-container">
             <div id="edit-galleries-section" style="display: none;">
                 <div id="gallery-list-panel" class="panel-style">
-                    <div id="add-gallery-button">+</div>
+                    <div id="show-add-gallery-menu-button">+</div>
                 </div>
                 <div id="edit-view">
                     <div id="edit-gallery-panel" class="panel-style">
                         <div id="tools">
                             <div id="photos-tools" class="panel-style">
-                                <button class="tools-panel-button" id="move-photo-button">move</button>
-                                <button class="tools-panel-button" id="delete-photo-button">delete</button>
-                                <button class="tools-panel-button" id="add-photo-button">add</button>
-                                <button class="tools-panel-button" id="delete-gallery">edit</button>
+                                <button class="tools-panel-button" id="add-photo-button">dodaj</button>
+                                <button class="tools-panel-button" id="edit-photo-button">edytuj</button>
+                                <button class="tools-panel-button" id="move-photo-button">przenieś</button>
+                                <button class="tools-panel-button" id="delete-photo-button">usuń</button>
                             </div>
                         </div>
 
@@ -65,11 +93,12 @@
 
                         <div id="tools-bottom">
                             <div id="tools-bottom-inner-wrapper">
-                                <button class="tools-panel-button" id="delete-gallery-button">delete gallery</button>
+                                <button id="show-photos-order-menu-button" class="tools-panel-button">sortuj zdjęcia</button>
+                                <button class="tools-panel-button" id="show-rename-gallery-menu-button">zmień nazwe galerii</button>
+                                <button class="tools-panel-button" id="delete-gallery-button">usuń galerie</button>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>

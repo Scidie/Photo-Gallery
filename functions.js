@@ -199,3 +199,41 @@ export function calcTime(timeLogged) {
     let difference = now - before;
     return difference / 3600000;
 }
+
+export function findAndEditArrayProperty(array, property, newValue, callback) {
+    for (let i = 0; i < array.length; i++) {
+        if (callback(array[i])) {
+            array[i][property] = newValue;
+        }
+    }
+}
+
+export function pushValueToArrayInObject(array, property, newValue, callback) {
+    for (let i = 0; i < array.length; i++) {
+        if (callback(array[i])) {
+            array[i][property].push(newValue)
+            break;
+        }
+    }
+}
+
+export function deleteObjectFromArray(array, callback) {
+    for (let i = 0; i < array.length; i++) {
+        if (callback(array[i])) {
+            array.splice(i, 1)
+            break;
+        }
+    }
+}
+
+export function getArrayPropertyFromObjectInArray(arrayOfObejcts, arrayName, callback) {
+    for (let i = 0; i < arrayOfObejcts.length; i++) {
+        if (callback(arrayOfObejcts[i])) {
+            return arrayOfObejcts[i][arrayName];
+        }
+    }
+}
+
+export function handleDragOver(event) {
+    event.preventDefault()
+}

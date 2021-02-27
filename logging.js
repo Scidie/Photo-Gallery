@@ -21,21 +21,21 @@ handlers.getJSONFromServer("userData.json")
         ipAddress = ip;
         for (let i = 0; i < userData["loggedUsers"].length; i++) {
           if (userData["loggedUsers"][i]["ipAddress"] === ip && handlers.calcTime(userData["loggedUsers"][i]["timeLogged"]) < 6) {
-            singOutButton.style.backgroundColor = "green";
-            userLogged = true;
+            singOutButton.style.backgroundColor = "#00b839";
             editGalleriesSection.style.display = "flex";
             userData["loggedUsers"][i]["ipAddress"] = ip;
             userData["loggedUsers"][i]["timeLogged"] = new Date().getTime();
             index = i;
             handlers.sendJSONToServer(userData, "userData.json", "updateJSON.php")
             controlPanel.initControlPanel();
+            userLogged = true;
             break;
           }
         }
       })
       .then(() => {
         if (userLogged === false) {
-          loggin(ipAddress);
+          initLoggingSection(ipAddress);
         }
       })
       .then(() => {
@@ -53,10 +53,7 @@ handlers.getJSONFromServer("userData.json")
       })
   })
 
-
-
-
-function loggin(ip) {
+function initLoggingSection(ip) {
   loggingSection.style.display = "flex";
   signInButton.addEventListener("click", () => {
     if (password.value === userData["accessCode"]) {
@@ -76,7 +73,3 @@ function loggin(ip) {
     }
   })
 }
-
-
-
-

@@ -1,65 +1,238 @@
 import * as handlers from "./functions.js";
 
 // defining global variables
-let galleryData = "",
-    galleryListPanel = document.querySelector("#gallery-list-panel"),
+let galleryData_JSON = "",
+    galleryList_Panel = document.querySelector("#gallery-list-panel"),
     photosContainer = document.querySelector("#photos-container"),
     selectedGallery = "",
-    inputArea = document.querySelector("#gallery-name-input"),
-    addGalleryButton = document.querySelector("#add-gallery-button"),
-    addGallery = document.querySelector("#add-gallery"),
-    addPhotoButton = document.querySelector("#add-photo-button"),
-    deletePhotoButton = document.querySelector("#delete-photo-button"),
-    movePhotoButton = document.querySelector("#move-photo-button"),
-    menuWindow = document.querySelector("#menu-window");
+    galleryName_Input = document.querySelector("#gallery-name-input"),
+    addGallery_Button = document.querySelector("#add-gallery-button"),
+    showAddGalleryMenu_Button = document.querySelector("#show-add-gallery-menu-button"),
+    addPhoto_Button = document.querySelector("#add-photo-button"),
+    deletePhoto_Button = document.querySelector("#delete-photo-button"),
+    movePhoto_Button = document.querySelector("#move-photo-button"),
+    uploadFile_MenuWindow = document.querySelector("#upload-file-menu-window"),
+    changeGalleryName_Button = document.querySelector("#change-gallery-name-button"),
+    changeGalleryName_Input = document.querySelector("#change-gallery-name-input"),
+    deleteGallery_Button = document.querySelector("#delete-gallery-button"),
+    movePhotos_MenuWindow = document.querySelector("#move-photos-menu-window"),
+    showRenameGalleryMenu_Button = document.querySelector("#show-rename-gallery-menu-button"),
+    chooseGallery_MenuWindow = document.querySelector(".choose-gallery-menu"),
+    photosOrder_MenuWindow = document.querySelector("#photos-order-menu-window"),
+    emptySlotsContainer = document.querySelector("#empty-slots-container"),
+    photosToChooseFromContainer = document.querySelector("#photos-to-choose-from-container"),
+    showPhotosOrderMenu_Button = document.querySelector("#show-photos-order-menu-button"),
+    body = document.querySelector("body"),
+    dragSrcElement = "",
+    savedSlot = "";
 
-let pointerImage = new Image();
-pointerImage.src = "./images/fingerPointer.png";
-pointerImage.classList.add("pointer-img")
+function handleDragStart(event) {
+    dragSrcElement = event.target;
+    event.target.style.opacity = "0.4";
+    event.dataTransfer.effectAllowed = "true";
+    event.dataTransfer.setData("text/plain", event.target.accessKey)
+}
+
+function handleDragEnd(event) {
+    event.preventDefault();
+    event.target.style.opacity = "1";
+}
 
 export function initControlPanel() {
     handlers.getJSONFromServer("galleryData.json")
         .then(response => {
-            galleryData = response;
-            let galleryNames = Object.keys(galleryData);
+            // body.addEventListener("mouseover", event => {
+            //     console.log(event.target);
+            // })
 
-            // preloading all images to an object
-            let images = {};
-            galleryNames.forEach(value => {
-                images[value] = handlers.createArrayOfDOMImages("photos", galleryData[value]["photos"], "photo-style");
+            galleryData_JSON = response;
+            let galleryNames = [];
+
+            galleryData_JSON["galleries"].forEach(value => {
+                galleryNames.push(value["galleryName"]);
             })
 
-            //creating DOM elements for each gallery in json
-            let galleryListElements = handlers.createArrayOfDOMDivs(galleryNames, "gallery")
+            // preloading all images to an object
+            let photos = {};
+            galleryData_JSON["galleries"].forEach(value => {
+                photos[value["galleryName"]] = handlers.createArrayOfDOMImages("photos", value["photos"], "photo-style");
+            })
+
+            //creating DOM elements based on each gallery name in json
+            let galleryDOMElements = handlers.createArrayOfDOMDivs(galleryNames, "gallery");
 
             // appending event listner to "add-gallery" button, which updates json by new gallery value from input and sends data to server.
-            addGallery.addEventListener("click", () => {
-                handlers.addNewPropertyToObjectFromInput(`${inputArea.value}`, galleryData, { "photos": [] })
-                handlers.sendJSONToServer(galleryData, "galleryData.json", "updateJSON.php")
+            addGallery_Button.addEventListener("click", () => {
+                galleryData_JSON["galleries"].push({"photos": [], "galleryName": galleryName_Input.value});
+                handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
                     .then(() => {
                         location.reload();
                     })
             })
 
-            // adding event listneres to each gallery list element, which is clearing edit view and then adding clicked gallery photos from preloaded object
-            galleryListElements.forEach(element => {
+            showAddGalleryMenu_Button.addEventListener("click", () => {
+                document.querySelector("#add-gallery-menu-window").style.display = "flex";
+                document.querySelector("#main-window").classList.add("blur");
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            showPhotosOrderMenu_Button.addEventListener("click", () => {
+                // find the right array of photos names
+                let photosToChooseFrom_Names =  handlers.getArrayPropertyFromObjectInArray(galleryData_JSON["galleries"], "photos", value => {
+                    return value["galleryName"] === selectedGallery;
+                })
+
+                //copying images based on array variable
+                let copiedImages = []
+
+                photos[selectedGallery].forEach(photo => {
+                    let singleCopiedImage = photo.cloneNode(true);
+                    singleCopiedImage.classList.add("photo-style2")
+                    singleCopiedImage.setAttribute("draggable", "true")
+                    copiedImages.push(singleCopiedImage)
+                })
+
+                
+
+                copiedImages.forEach(photo => {
+                    photo.addEventListener("dragover", handlers.handleDragOver, false)
+                    photo.addEventListener("dragstart", event => {
+                        savedSlot = event.target.parentNode;
+                        event.target.style.opacity = "0.4";
+                        event.dataTransfer.setData("text/plain", event.target.accessKey)
+                    })
+
+                    photo.addEventListener("dragend", event => {
+                        event.target.style.opacity = "1";
+                    })
+                    
+                    photosToChooseFromContainer.appendChild(photo);
+                })
+
+                photosToChooseFrom_Names.forEach(name => {
+                    let emptySlot = handlers.createDivDOMElement(photosToChooseFrom_Names.indexOf(name) + 1, "empty-slot", photosToChooseFrom_Names.indexOf(name) + 1)
+                    emptySlot.addEventListener("dragover", handlers.handleDragOver, false)
+                    emptySlot.addEventListener("drop", event => {
+                        if (emptySlot.firstElementChild !== null) {
+                            savedSlot.appendChild(emptySlot.firstElementChild);
+                        }
+
+                        for (let i = 0; i < copiedImages.length; i++) {
+                            if (copiedImages[i].accessKey === event.dataTransfer.getData("text/plain")) {
+                                emptySlot.appendChild(copiedImages[i])
+                                event.dataTransfer.clearData()
+                                break;
+                            }
+                        }
+                    })
+
+                    emptySlotsContainer.appendChild(emptySlot);
+                })
+
+                photosOrder_MenuWindow.style.display = "flex";
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            deleteGallery_Button.addEventListener("click", () => {
+                handlers.deleteObjectFromArray(galleryData_JSON["galleries"], el => {
+                    return el["galleryName"] === selectedGallery;
+                })
+                handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
+                .then(() => {
+                    location.reload();
+                })
+            })
+
+            showRenameGalleryMenu_Button.addEventListener("click", () => {
+                document.querySelector("#gallery-menu-window").style.display = "flex";
+                document.querySelector("#main-window").classList.add("blur");
+            })
+            
+            changeGalleryName_Button.addEventListener("click", () => {
+                handlers.findAndEditArrayProperty(galleryData_JSON["galleries"], "galleryName", changeGalleryName_Input.value, el => {
+                    return el["galleryName"] === selectedGallery;
+                })
+                handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
+                .then(() => {
+                    location.reload();
+                })
+            })
+
+            // adding event listneres to each gallery element, which is clearing "edit view" section and then adding clicked gallery photos from object with preloader earlier images
+            galleryDOMElements.forEach(element => {
                 element.addEventListener("click", () => {
-                    galleryListElements.forEach(element => {
+                    galleryDOMElements.forEach(element => {
                         element.classList.remove("gallery-selected");
                     })
                     element.classList.add("gallery-selected")
                     photosContainer.innerHTML = "";
-                    selectedGallery = `${element.textContent}`;
 
-                    images[selectedGallery].forEach(value => {
+                    selectedGallery = element.textContent;
+
+                    photos[selectedGallery].forEach(value => {
                         let imageContainer = handlers.createDivDOMElement("", "image-container", value.accessKey);
                         let shadowBox = handlers.createDivDOMElement("", "shadow-box", value.accessKey);
-                        let simbol = handlers.createDivDOMElement("", "inside-image-simbol", value,accessKey)
+                        let simbol = handlers.createDivDOMElement("", "inside-image-simbol", value.accessKey)
 
                         imageContainer.appendChild(value);
                         imageContainer.appendChild(handlers.createInsideImageButton(value.accessKey, "inside-image-button"))
                         imageContainer.appendChild(shadowBox)
                         imageContainer.appendChild(simbol)
+                        simbol.style.display = "none";
 
                         imageContainer.addEventListener("click", event => {
                             if (event.target.classList.contains("inside-image-button") === false) {
@@ -78,36 +251,46 @@ export function initControlPanel() {
                 })
             })
 
-            deletePhotoButton.addEventListener("click", () => {
+            deletePhoto_Button.addEventListener("click", () => {
                 let markedPhotos = handlers.filterDOMElements(photosContainer.querySelectorAll(".inside-image-simbol"), el => {
                     return el.style.display === "flex";
                 })
 
                 let accessKeys = handlers.getAttributesFromDOMElements(markedPhotos, "accessKey");
 
-                handlers.removeElementsFromArray(accessKeys, galleryData[selectedGallery]["photos"])
-                handlers.sendJSONToServer(galleryData, "galleryData.json", "updateJSON.php")
+                let photosArray = handlers.getArrayPropertyFromObjectInArray(galleryData_JSON["galleries"], "photos", el => {
+                    return el["galleryName"] === selectedGallery;
+                })
+
+                handlers.removeElementsFromArray(accessKeys, photosArray)
+                handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
                     .then(() => {
-                        handlers.removeDOMElementsFromArrayByAttribute(accessKeys, "accessKey", images[selectedGallery])
+                        handlers.removeDOMElementsFromArrayByAttribute(accessKeys, "accessKey", photos[selectedGallery])
                         handlers.removeDOMElementsByAttribute(accessKeys, "accessKey", photosContainer.querySelectorAll(".image-container"))
                     })
             })
 
-            movePhotoButton.addEventListener("click", () => {
-                let markedCheckboxes = handlers.filterDOMElements(photosContainer.querySelectorAll(".inside-image-simbol"), el => {
+            movePhoto_Button.addEventListener("click", () => {
+                let markedPhotos = handlers.filterDOMElements(photosContainer.querySelectorAll(".inside-image-simbol"), el => {
                     return el.style.display === "flex";
                 })
-                let accessKeys = handlers.getAttributesFromDOMElements(markedCheckboxes, "accessKey");
-                let chooseGalleryMenu = document.createElement("div");
-                chooseGalleryMenu.classList.add("choose-gallery-menu");
-                photosContainer.appendChild(chooseGalleryMenu);
+                let accessKeys = handlers.getAttributesFromDOMElements(markedPhotos, "accessKey");
+                chooseGallery_MenuWindow.innerHTML = "";
+                movePhotos_MenuWindow.style.display = "flex"
 
                 galleryNames.forEach(value => {
-                    let gallery = handlers.createDivDOMElement(value, "destination-gallery")
-                    chooseGalleryMenu.appendChild(gallery);
+                    let gallery = handlers.createDivDOMElement(value, "blue-button")
+                    let photosArray = handlers.getArrayPropertyFromObjectInArray(galleryData_JSON["galleries"], "photos", el => {
+                        return el["galleryName"] === selectedGallery;
+                    })
+                    let newLocation = handlers.getArrayPropertyFromObjectInArray(galleryData_JSON["galleries"], "photos", el => {
+                        return el["galleryName"] === value;
+                    })
+
+                    chooseGallery_MenuWindow.appendChild(gallery)
                     gallery.addEventListener("click", () => {
-                        handlers.moveValuesFromArrayToArray(accessKeys, galleryData[selectedGallery]["photos"], galleryData[value]["photos"]);
-                        handlers.sendJSONToServer(galleryData, "galleryData.json", "updateJSON.php")
+                        handlers.moveValuesFromArrayToArray(accessKeys, photosArray, newLocation);
+                        handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
                             .then(() => {
                                 let DOMElementsToMove = handlers.filterDOMElements(photosContainer.querySelectorAll(".image-container"), el => {
                                     return el.querySelector(".inside-image-simbol").style.display === "flex";
@@ -115,19 +298,20 @@ export function initControlPanel() {
 
                                 DOMElementsToMove.forEach(element => {
                                     element.remove();
-                                    images[selectedGallery] = handlers.arrayRemove(images[selectedGallery], element.querySelector("img"))
-                                    images[value].push(element.querySelector("img"));
+                                    photos[selectedGallery] = handlers.arrayRemove(photos[selectedGallery], element.querySelector("img"))
+                                    photos[value].push(element.querySelector("img"));
                                 })
+                                movePhotos_MenuWindow.style.display = "none";
                             })
                     })
                 })
             })
 
             // appending gallery list elements to galleries panel.
-            handlers.appendDOMElements(galleryListElements, galleryListPanel);
+            handlers.appendDOMElements(galleryDOMElements, galleryList_Panel);
 
-            addPhotoButton.addEventListener("click", () => {
-                document.querySelector("#menu-window").style.display = "flex";
+            addPhoto_Button.addEventListener("click", () => {
+                document.querySelector("#upload-file-menu-window").style.display = "flex";
                 document.querySelector("#main-window").classList.add("blur");
             })
 
@@ -136,19 +320,23 @@ export function initControlPanel() {
                 let fileName = document.querySelector("#hidden-input-file").files[0].name;
                 let loadingAnimation = document.createElement("div")
                 loadingAnimation.classList.add("loading-animation");
-                menuWindow.appendChild(loadingAnimation);
-                handlers.addNewValueToArray(galleryData[selectedGallery]["photos"], document.querySelector("#hidden-input-file").files[0].name)
-                handlers.sendJSONToServer(galleryData, "galleryData.json", "updateJSON.php")
+                uploadFile_MenuWindow.appendChild(loadingAnimation);
+                handlers.pushValueToArrayInObject(galleryData_JSON["galleries"], "photos", document.querySelector("#hidden-input-file").files[0].name, el => {
+                    return el["galleryName"] === selectedGallery;
+                })
+                // handlers.addNewValueToArray(galleryData[selectedGallery]["photos"], document.querySelector("#hidden-input-file").files[0].name)
+                handlers.sendJSONToServer(galleryData_JSON, "galleryData.json", "updateJSON.php")
                 handlers.sendFileToPHP(document.querySelector("#hidden-input-file").files[0], selectedGallery, "uploadFile.php")
                     .then(() => {
-                        menuWindow.removeChild(loadingAnimation);
-                        document.querySelector("#menu-window").style.display = "none";
+                        uploadFile_MenuWindow.removeChild(loadingAnimation);
+                        document.querySelector("#upload-file-menu-window").style.display = "none";
                         document.querySelector("#main-window").classList.remove("blur");
 
                         let image = handlers.createImageDOMElement("photos", fileName, "photo-style");
                         let imageContainer = handlers.createDivDOMElement("", "image-container", fileName)
                         let shadowBox = handlers.createDivDOMElement("", "shadow-box", fileName);
                         let simbol = handlers.createInsideImageSimbol(fileName, "inside-image-simbol");
+                        simbol.style.display = "none";
 
                         imageContainer.appendChild(image);
                         imageContainer.appendChild(handlers.createInsideImageButton(fileName, "inside-image-button"))
@@ -156,7 +344,6 @@ export function initControlPanel() {
                         imageContainer.appendChild(simbol)
 
                         imageContainer.addEventListener("click", event => {
-                            console.log(event.target)
                             let simbol = imageContainer.querySelector(".inside-image-simbol");
                             if (event.target.classList.contains("inside-image-button") === false) {
                                 if (simbol.style.display === "none") {
@@ -170,8 +357,10 @@ export function initControlPanel() {
                         })
                         photosContainer.appendChild(imageContainer)
 
-                        images[selectedGallery].push(image);
+                        photos[selectedGallery].push(image);
                     })
             })
+
+
         })
 }
