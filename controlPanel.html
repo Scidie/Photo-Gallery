@@ -29,6 +29,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
+
+
+
+
+    <!-- hidden windows -->
     <div id="upload-file-menu-window" class="hidden-menu-container-style">
         <div id="upload-file-container" class="menu-window-inner-container">
             <input type="file" id="hidden-input-file">
@@ -58,14 +63,35 @@
             <div id="photos-to-choose-from-container"></div>
         </div>
     </div>
+    <div id="edit-description-menu-window" class="hidden-menu-container-style">
+        <div id="edit-description-inner-container">
+            <div id="edit-description-title"></div>
+            <input type="text" id="edit-description-input-area">
+            <button id="save-description-button">zapisz</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div id="main-window">
         <div id="title-container">
             <div id="title">Photo Gallery</div>
             <div id="navbar-container">
                 <a class="navbar-element" href="./index.html">BLOG</a>
                 <a class="navbar-element" href="./galleries.html">GALERIA</a>
-                <a class="navbar-element" href="./controlPanel.html">PANEL STEROWANIA</a>
-                <div draggable="true" style="cursor: move;">move me!</div>
+                <a class="navbar-element highlighted" href="./controlPanel.html">PANEL STEROWANIA</a>
                 <img class="logout-button" src="./images/logoutButtonTransparent.png" alt="">
             </div>
         </div>
@@ -81,23 +107,20 @@
                 <div id="edit-view">
                     <div id="edit-gallery-panel" class="panel-style">
                         <div id="tools">
+                            <div id="tools-bottom-inner-wrapper">
+                                <button class="tools-panel-button" id="show-galleries-order-button">sortuj galerie</button>
+                                <button class="tools-panel-button" id="show-rename-gallery-menu-button">zmień nazwe galerii</button>
+                                <button class="tools-panel-button" id="delete-gallery-button">usuń galerie</button>
+                            </div>
                             <div id="photos-tools" class="panel-style">
                                 <button class="tools-panel-button" id="add-photo-button">dodaj</button>
-                                <button class="tools-panel-button" id="edit-photo-button">edytuj</button>
                                 <button class="tools-panel-button" id="move-photo-button">przenieś</button>
+                                <button class="tools-panel-button" id="show-photos-order-menu-button">sortuj</button>
                                 <button class="tools-panel-button" id="delete-photo-button">usuń</button>
                             </div>
                         </div>
 
                         <div id="photos-container"></div>
-
-                        <div id="tools-bottom">
-                            <div id="tools-bottom-inner-wrapper">
-                                <button id="show-photos-order-menu-button" class="tools-panel-button">sortuj zdjęcia</button>
-                                <button class="tools-panel-button" id="show-rename-gallery-menu-button">zmień nazwe galerii</button>
-                                <button class="tools-panel-button" id="delete-gallery-button">usuń galerie</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

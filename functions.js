@@ -226,10 +226,18 @@ export function deleteObjectFromArray(array, callback) {
     }
 }
 
-export function getArrayPropertyFromObjectInArray(arrayOfObejcts, arrayName, callback) {
+export function getPropertyFromObjectInArray(arrayOfObejcts, property, callback) {
     for (let i = 0; i < arrayOfObejcts.length; i++) {
         if (callback(arrayOfObejcts[i])) {
-            return arrayOfObejcts[i][arrayName];
+            return arrayOfObejcts[i][property];
+        }
+    }
+}
+
+export function getObjectFromArrayByItsProperty(arrayOfObejcts, callback) {
+    for (let i = 0; i < arrayOfObejcts.length; i++) {
+        if (callback(arrayOfObejcts[i])) {
+            return arrayOfObejcts[i]
         }
     }
 }

@@ -36,7 +36,7 @@ body {
     /* background: url(./images/pexels-gabriel-peter-696644.jpg); */
     background-size: cover;
     /* background-color: #2b2b2b; */
-    margin-top: 65px;
+    margin-top: 27px;
     /* padding-top: 19px; */
 }
 
@@ -48,7 +48,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #272727;
+    /* background-color: #272727; */
     /* border-bottom: solid 1px #ad601e30; */
 }
 
@@ -126,8 +126,8 @@ body {
 #tools {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    padding: 10px;
+    justify-content: space-between;
+    padding: 0 10px;
 }
 
 .tools-panel-button {
@@ -198,9 +198,9 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
     align-items: center;
-    padding: 0 50px 50px;
+    justify-content: flex-end;
+    padding: 50px;
 }
 
 #show-add-gallery-menu-button {
@@ -274,7 +274,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: rgb(58 58 58 / 10%);
+    background-color: rgb(0 0 0 / 52%);
     z-index: 10;
 }
 
@@ -285,7 +285,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: rgb(58 58 58 / 10%);
+    background-color: rgb(0 0 0 / 52%);
     z-index: 10;
 }
 
@@ -392,7 +392,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: rgb(58 58 58 / 10%);
+    background-color: rgb(0 0 0 / 52%);
     z-index: 10;
 }
 
@@ -454,7 +454,8 @@ body {
 }
 
 .logout-button {
-    height: 30px;
+    height: 23px;
+    margin-bottom: 2px;
     transition: 0.4s;
 
     outline: none;
@@ -542,12 +543,12 @@ body {
 }
 
 #show-rename-gallery-menu-button {
-    color: #cecece;
+    color: white;
     background-color: #4c0080;
 }
 
 #delete-gallery-button {
-    color: #cecece;
+    color: white;
     background-color: #ab0101;
 }
 
@@ -562,7 +563,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: rgb(58 58 58 / 10%);
+    background-color: rgb(0 0 0 / 52%);
     z-index: 10;
 }
 
@@ -616,7 +617,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-color: rgb(58 58 58 / 10%);
+    background-color: rgb(0 0 0 / 52%);
     z-index: 10;
 }
 
@@ -663,11 +664,11 @@ body {
 
 #photos-to-choose-from-container {
     display: flex;
-    background-color: #2d2d2d;
+    /* background-color: #2d2d2d; */
     padding: 10px;
     border-radius: 20px;
-    /* margin-bottom: 10px; */
     margin-top: 52px;
+    align-items: center;
 }
 
 
@@ -716,4 +717,41 @@ body {
 
 .hidden-menu-container-style {
     height: 100vh;
+}
+
+/* .save-button {
+    width: 100px;
+    border-radius: 30px;
+    background-color: ;
+} */
+
+#show-galleries-order-button {
+    background-color: #085839;
+    color: white;
+}
+
+#edit-description-menu-window {
+    display: none;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: rgb(0 0 0 / 52%);
+}
+
+#edit-description-inner-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 200px;
+    height: 600px;
+    border: solid 2px red;
+    background-color: darkslategray;
+}
+
+.highlighted {
+    color: white;
 }
